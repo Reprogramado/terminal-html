@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>nexus // terminal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- background layers -->
+  <div class="bg-room"></div>
+  <div class="bg-grid"></div>
+  <canvas class="bg-particles" id="bg-particles"></canvas>
+  <div class="bg-noise"></div>
+  <div class="scanline-sweep"></div>
+
+  <!-- holo frame -->
+  <div class="holo-wrap">
+    <div class="holo" id="holo">
+      <div class="glitch-overlay"></div>
+
+      <div class="titlebar">
+        <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        <div class="tb-pill"><div class="dot g"></div> SECURE LINK</div>
+        <div class="tb-center">
+          <span class="dim">/</span> <span class="accent">NEXUS</span> <span class="sep">·</span> holo-tty1 <span class="sep">·</span> <span class="violet">cliente@nexus</span> <span class="dim">/</span>
+        </div>
+        <div class="tb-right">
+          <span class="live-dot"></span>
+          <span id="clock">00:00:00</span>
+        </div>
+      </div>
+
+      <div class="terminal" id="terminal"></div>
+
+      <div class="hints">
+        <div class="hints-left">
+          <span class="chip"><kbd>↑↓</kbd> histórico</span>
+          <span class="chip"><kbd>TAB</kbd> autocomplete</span>
+          <span class="chip"><kbd>help</kbd></span>
+        </div>
+        <div class="hints-right">
+          <span class="chip">v9.4 holo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tweaks panel -->
+  <div class="tweaks" id="tweaks">
+    <div class="tweaks-head">
+      <div class="tweaks-title"><span class="live-dot"></span> Tweaks</div>
+      <button class="tweaks-close" id="tweaks-close" aria-label="fechar">×</button>
+    </div>
+    <div class="tweaks-body">
+      <div class="tw-section">
+        <div class="tw-label">Tema</div>
+        <div class="theme-grid" id="theme-grid"></div>
+      </div>
+
+      <div class="tw-section">
+        <div class="tw-label">Glitch ambiente</div>
+        <div class="toggle-row">
+          <div>
+            distorções aleatórias
+            <div class="desc">RGB shift a cada poucos segundos</div>
+          </div>
+          <div class="switch" id="sw-glitch" role="switch" tabindex="0"></div>
+        </div>
+      </div>
+
+      <div class="tw-section">
+        <div class="tw-label">Intensidade do glow</div>
+        <input type="range" min="0" max="2" step="0.05" value="1" class="slider" id="sl-glow">
+      </div>
+
+      <div class="tw-section">
+        <div class="tw-label">Disparar</div>
+        <div class="tweaks-actions">
+          <button class="tw-btn" id="tw-glitch-now">glitch</button>
+          <button class="tw-btn" id="tw-particles">partículas</button>
+          <button class="tw-btn" id="tw-matrix">matrix</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- matrix overlay -->
+  <div class="matrix-overlay" id="matrix-overlay">
+    <canvas id="matrix-canvas"></canvas>
+    <div class="matrix-hint">clique pra sair · esc</div>
+  </div>
+
+<!-- editmode persistence block (keys for tweaks) -->
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "theme": "nexus",
+    "ambientGlitch": false,
+    "glow": 1
+  }/*EDITMODE-END*/;
+</script>
+
+<script src="effects.js"></script>
+<script src="terminal.js"></script>
+<script>
+  // announce edit mode availability
+  setTimeout(() => {
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  }, 100);
+</script>
+</body>
+</html>
